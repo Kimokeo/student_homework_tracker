@@ -11,66 +11,96 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150211030539) do
+ActiveRecord::Schema.define(version: 20150211175005) do
 
   create_table "admins", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name",                   limit: 255
+    t.string   "git_name",               limit: 255
+    t.integer  "admin_id",               limit: 4
   end
 
-  add_index "admins", ["email"], name: "index_admins_on_email", unique: true
-  add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  add_index "admins", ["email"], name: "index_admins_on_email", unique: true, using: :btree
+  add_index "admins", ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true, using: :btree
 
   create_table "assignments", force: :cascade do |t|
-    t.string  "name"
-    t.text    "requirements"
-    t.integer "user_id"
-    t.integer "admin_id"
+    t.string  "name",         limit: 255
+    t.text    "requirements", limit: 65535
+    t.integer "user_id",      limit: 4
+    t.integer "admin_id",     limit: 4
   end
 
   create_table "comments", force: :cascade do |t|
-    t.string  "content"
-    t.integer "user_id"
-    t.string  "comment_type"
-    t.integer "comment_id"
+    t.string  "content",      limit: 255
+    t.integer "user_id",      limit: 4
+    t.string  "comment_type", limit: 255
+    t.integer "comment_id",   limit: 4
   end
 
   create_table "courses", force: :cascade do |t|
-    t.string "name"
-    t.text   "description"
-    t.string "location"
+    t.string "name",        limit: 255
+    t.text   "description", limit: 65535
+    t.string "location",    limit: 255
+  end
+
+  create_table "links", force: :cascade do |t|
+    t.text "url",        limit: 65535
+    t.text "submission", limit: 65535
+  end
+
+  create_table "location_course_users", force: :cascade do |t|
+    t.integer "location_course_id", limit: 4
+    t.integer "user_id",            limit: 4
+  end
+
+  create_table "location_courses", force: :cascade do |t|
+    t.integer "location_id", limit: 4
+    t.integer "course_id",   limit: 4
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "name",    limit: 255
+    t.string "address", limit: 255
+  end
+
+  create_table "submissions", force: :cascade do |t|
+    t.boolean "workflow",      limit: 1
+    t.string  "name",          limit: 255
+    t.integer "assignment_id", limit: 4
+    t.integer "user_id",       limit: 4
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          limit: 4,   default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
-    t.string   "gitname"
-    t.integer  "user_id"
-    t.boolean  "admin"
+    t.string   "name",                   limit: 255
+    t.string   "gitname",                limit: 255
+    t.integer  "user_id",                limit: 4
+    t.boolean  "admin",                  limit: 1
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

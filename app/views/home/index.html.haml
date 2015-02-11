@@ -1,7 +1,21 @@
 .row
 	.col.lg.3
 		.ul
-			%h2 WELCOME TO THE SHT
-			if 
-			= link_to "Sign up", new_user_registration_path
-			= link_to "Sign in", new_user_session_path
+			%h2 Welcome to the student homework tracker
+			- if user_signed_in? or admin_signed_in?
+				authenticated
+				- if user_signed_in?
+					= link_to "go", users_path
+				- else
+					= link_to "go", admins_path
+			- else
+				h3 lets get started!
+				%br
+				For students:
+				= link_to "Sign up", new_user_registration_path
+				= link_to "Sign in", new_user_session_path
+				%br
+				For teachers:
+				= link_to "Sign up", new_admin_registration_path
+				= link_to "Sign in", new_admin_session_path
+			%br
