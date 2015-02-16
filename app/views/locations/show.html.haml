@@ -1,0 +1,9 @@
+%h1 Student Homework Tracker - Teacher Edition
+.col.md.3
+	.well
+		%br
+		= @location.name
+		= @location.address
+		%br
+		= link_to "Edit Campus", edit_location_path(@location)
+		= link_to 'Back', locations_path

@@ -1,0 +1,14 @@
+%h1 Student Homework Tracker - Teacher Edition
+.col.md.3
+	.well
+		- @locations.each do |location|
+			%br
+			= location.name
+			= location.address
+			%br
+			= link_to 'Show Campus', location_path(location)
+			= link_to 'Destroy', location, method: :delete, data: { confirm: 'Are you sure?' }
+	
+	= link_to "Create new Campus", new_location_path
+	%br
+				

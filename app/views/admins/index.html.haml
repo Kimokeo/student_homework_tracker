@@ -1,10 +1,2 @@
 %h1 Student Homework Tracker - Teacher Edition
-	.col.md.3
-		.well
-			- @locations.each do |location|
-				%br
-				location.name
-				location.address
-				%br
-			- link_to "Create new Campus" new_locations_path
-				
+= link_to "View Campuses", locations_path

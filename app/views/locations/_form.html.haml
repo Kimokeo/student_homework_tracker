@@ -1,0 +1,11 @@
+%h2 New Campus form
+.half
+	= form_for @location do |f|
+		%br
+		= f.label :name
+		= f.text_field :name
+		%br
+		= f.label :address
+		= f.text_field :address
+		%br
+		= f.submit
